@@ -30,7 +30,8 @@
 
                         {% for measurement in measurement_list %}
                         <tr>
-                            <td>{{ measurement.variable.name }}</td>
+                            <td><a href="/measurement/{{ measurement.variable.id }}/">
+                              {{ measurement.variable.name }}</td></a>
                             <td>{{ measurement.value }}</td>
                             <td>{{ measurement.unit }}</td>
                             <td>{{ measurement.place }}</td>

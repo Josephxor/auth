@@ -40,3 +40,27 @@ def ThresholdEdit(request, id_threshold):
         return redirect('thresholdList')
     role = getRole(request)
     return render(request, 'Threshold/thresholdEdit.html', {'form':form, 'variable':varName.name, 'role': role})
+
+def getRole(request):
+    user = request.user
+    auth0user = user.social_auth.get(provider="auth0")
+    accessToken = auth0user.extra_data['access_token']
+    url = "https://isis2503-mfvallejo.auth0.com/userinfo"
+    headers = {'authorization': 'Bearer ' + accessToken}
+    resp = requests.get(url, headers=headers)
+    userinfo = resp.json()
+    role = userinfo['https://isis2503-mfvallejo:auth0:com/role']
+    return (role)
+
+@login_required
+def MeasurementPromedio(request, id_measurement):
+    suma = 0
+    varName = Variable.objects.get(id=id_measurement)
+    for e in Measurement.objects.filter(variable=id_measurement).values_list('value', flat=True):
+        print(e)
+        suma = suma + e
+    print(suma)
+    print(Measurement.objects.filter(variable=id_measurement).count())
+    promedio = suma/Measurement.objects.filter(variable=id_measurement).count()
+    role = getRole(request)
+    return render(request, 'Measurement/measurementsPromedio.html', {'variable': varName.name, 'promedio':promedio, 'role': role})

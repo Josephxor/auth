@@ -6,6 +6,7 @@ from . import views
 urlpatterns = [
     url('^$', views.index),
     url(r'^measurements/', views.MeasurementList),
+    url(r'^measurement/(?P<id_measurement>\d+)/$',views.MeasurementPromedio, name = 'measurementPromedio'),
     url(r'^thresholds/', views.ThresholdList, name='thresholdList'),
     url(r'^threshold/(?P<id_threshold>\d+)/$', views.ThresholdEdit, name='thresholdEdit'),
     url(r'^', include('django.contrib.auth.urls')),

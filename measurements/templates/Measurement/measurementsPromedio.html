@@ -1,0 +1,12 @@
+{% extends 'base.html' %} 
+{% block content %} 
+<form methd = "GET">
+    {% csrf_token %}
+    {% if role == "Gerencia Campus" %}
+    <h2>{{ variable }}</h2>
+    <h3>{{ promedio }}</h>
+    {% else %}
+    <h2>Usuario no autorizado</h2>
+    {% endif %}	
+</form> 
+{% endblock %}
